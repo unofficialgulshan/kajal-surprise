@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Kajal ❤️</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial;
+background:linear-gradient(135deg,#ff758c,#ff7eb3);
+color:white;
+text-align:center;
+overflow:hidden;
+}
+
+/* screens */
+
+.screen{
+display:none;
+height:100vh;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+padding:20px;
+}
+
+.active{
+display:flex;
+}
+
+/* heart photo */
+
+.heart-frame{
+width:220px;
+height:200px;
+background:red;
+position:relative;
+transform:rotate(-45deg);
+margin-bottom:30px;
+}
+
+.heart-frame:before,
+.heart-frame:after{
+content:"";
+width:220px;
+height:200px;
+background:red;
+border-radius:50%;
+position:absolute;
+}
+
+.heart-frame:before{
+top:-100px;
+left:0;
+}
+
+.heart-frame:after{
+left:100px;
+top:0;
+}
+
+.heart-frame img{
+position:absolute;
+width:260px;
+height:260px;
+object-fit:cover;
+transform:rotate(45deg);
+top:-30px;
+left:-20px;
+border-radius:20px;
+}
+
+/* buttons */
+
+button{
+padding:14px 28px;
+font-size:18px;
+border:none;
+border-radius:12px;
+cursor:pointer;
+margin:10px;
+}
+
+#yes{
+background:#ff2d55;
+color:white;
+}
+
+#no{
+background:white;
+color:black;
+position:absolute;
+}
+
+.next{
+background:white;
+color:#ff2d55;
+}
+
+/* typing text */
+
+#typing{
+font-size:22px;
+max-width:400px;
+min-height:80px;
+}
+
+/* hearts */
+
+.heart{
+position:absolute;
+font-size:22px;
+animation:float 6s linear infinite;
+}
+
+@keyframes float{
+0%{transform:translateY(100vh);opacity:1;}
+100%{transform:translateY(-10vh);opacity:0;}
+}
+
+/* fireworks canvas */
+
+canvas{
+position:fixed;
+top:0;
+left:0;
+pointer-events:none;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- romantic song -->
+
+<iframe width="0" height="0"
+src="https://www.youtube.com/embed/2Vv-BfVoq4g?autoplay=1&loop=1&playlist=2Vv-BfVoq4g"
+allow="autoplay">
+</iframe>
+
+<!-- Screen 1 -->
+
+<div id="screen1" class="screen active">
+
+<div class="heart-frame">
+<img src="photo.jpg">
+</div>
+
+<h1>Hey Kajal ❤️</h1>
+
+<div id="typing"></div>
+
+<button class="next" onclick="next(2)">Next</button>
+
+</div>
+
+<!-- Screen 2 -->
+
+<div id="screen2" class="screen">
+
+<h1>Babu 😊</h1>
+<p>You make my world happier every day.</p>
+
+<button class="next" onclick="next(3)">Next</button>
+
+</div>
+
+<!-- Screen 3 -->
+
+<div id="screen3" class="screen">
+
+<h1>Babu ❤️</h1>
+<p>I feel lucky to have someone like you.</p>
+
+<button class="next" onclick="next(4)">Next</button>
+
+</div>
+
+<!-- Question -->
+
+<div id="screen4" class="screen">
+
+<h1>Babu 🥺</h1>
+<p>Will you stay with me forever?</p>
+
+<button id="yes" onclick="yesClicked()">YES ❤️</button>
+<button id="no">NO 🙈</button>
+
+</div>
+
+<!-- Final -->
+
+<div id="screen5" class="screen">
+
+<h1>Kajal ❤️</h1>
+
+<h2>Will you be my forever? 💍</h2>
+
+<p>I promise to always care for you and keep you smiling.</p>
+
+</div>
+
+<canvas id="fireworks"></canvas>
+
+<script>
+
+/* typing animation */
+
+let text="I made this little surprise just for you...";
+let i=0;
+
+function type(){
+if(i<text.length){
+document.getElementById("typing").innerHTML+=text.charAt(i);
+i++;
+setTimeout(type,50);
+}
+}
+
+type();
+
+/* screens */
+
+function next(n){
+document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
+document.getElementById("screen"+n).classList.add("active");
+}
+
+/* running NO button */
+
+let no=document.getElementById("no");
+
+no.addEventListener("mouseover",move);
+
+function move(){
+let x=Math.random()*(window.innerWidth-100);
+let y=Math.random()*(window.innerHeight-100);
+no.style.left=x+"px";
+no.style.top=y+"px";
+}
+
+/* yes click */
+
+function yesClicked(){
+next(5);
+startFireworks();
+}
+
+/* floating hearts */
+
+setInterval(()=>{
+
+let heart=document.createElement("div");
+heart.className="heart";
+heart.innerHTML="❤️";
+
+heart.style.left=Math.random()*100+"vw";
+heart.style.fontSize=(20+Math.random()*20)+"px";
+
+document.body.appendChild(heart);
+
+setTimeout(()=>heart.remove(),6000);
+
+},300);
+
+/* fireworks */
+
+let canvas=document.getElementById("fireworks");
+let ctx=canvas.getContext("2d");
+
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+let particles=[];
+
+function startFireworks(){
+
+setInterval(()=>{
+
+for(let i=0;i<80;i++){
+
+particles.push({
+x:canvas.width/2,
+y:canvas.height/2,
+vx:(Math.random()-0.5)*6,
+vy:(Math.random()-0.5)*6,
+life:100
+});
+
+}
+
+},500);
+
+animate();
+
+}
+
+function animate(){
+
+requestAnimationFrame(animate);
+
+ctx.clearRect(0,0,canvas.width,canvas.height);
+
+particles.forEach(p=>{
+p.x+=p.vx;
+p.y+=p.vy;
+p.life--;
+
+ctx.fillStyle="white";
+ctx.fillRect(p.x,p.y,2,2);
+
+});
+
+particles=particles.filter(p=>p.life>0);
+
+}
+
+</script>
+
+</body>
+</html>
